@@ -12,7 +12,7 @@ class Ad {
 
 class Site {
 	var $arrayAds = array();
-	var $arrayInt = array(6,5,4,3,2,1);
+	#var $arrayInt = array(6,5,4,3,2,1);
 
 	function insertAd($ad){
 		array_push($this->arrayAds, $ad);
@@ -35,6 +35,7 @@ class Site {
 				$this->output($value, $indice);
 			}	
 		}
+		echo("<br/>");
 	}
 
 	function remove($ad) {
@@ -124,6 +125,7 @@ class Site {
 	function orderByTitle() {
 		$arrayOrderned = array();
 		asort($this->arrayAds);
+		echo("Lista ordenada pelo título:<br/>");
 		foreach ($this->arrayAds as $indice => $value) {
 			$arrayOrderned[] = $value;
 		}
@@ -139,36 +141,21 @@ class Site {
 	}
 
 	function orderByTitle2() {
+		echo("Lista ordenada pelo título:<br/>");
 		$max = count($this->arrayAds)-2;
-		for ($end=$max; $end>=0; $end--) {
-		 	for ($i=0; $i<=$end; $i++) {
-		 		if ($this->arrayAds[$i] > $this->arrayAds[$i+1]) {
-		 			$this->swap($this->arrayAds, $i);
-		 		}
-		 	}
+		if (count($this->arrayAds > 0)) {
+			for ($end=$max; $end>=0; $end--) {
+			 	for ($i=0; $i<=$end; $i++) {
+			 		if ($this->arrayAds[$i] > $this->arrayAds[$i+1]) {
+			 			$this->swap($this->arrayAds, $i);
+			 		}
+			 	}
+			}
 		}
 		foreach ($this->arrayAds as $indice => $value) {
 			$this->output($value, $indice);
 		}
 	}
-
-	/*function orderByDescription() {
-		$arrayOrderned = array();
-		if (count($this->arrayAds)>0) {
-			foreach ($this->arrayAds as $indice => $value) {
-				if (is_array($value)) {
-					foreach ($value as $indice2 => $value2) {
-						if ($indice2 == $description) {
-							$this->swap($this->arrayAds, $i);
-						}
-					}
-				}
-				else {
-					$arrayOrderned[$indice] = $value;
-				}
-			}
-		}
-	}*/
 }
 
 $site = new Site();
@@ -192,15 +179,13 @@ $ad9 = new Ad("Lateral direito", "Mochila");
 $site->insertAd($ad9);
 $ad10 = new Ad("Goleiro", "Frangueiro");
 $site->insertAd($ad10);
-#$site->orderByDescription();
-$site->orderByTitle2();
-#$response = $site->searchByPartOfWord("mamameolhando");
-#print_r(count($response)>0 ? $response : "Não encontrado");
-#$site->list(); //Lista todos os itens do array
-#$site->remove($ad1); //remove um item do array
-#$site->list(); //Lista todos os itens do array
-#$site->view($ad1); //visualiza um item do array
-#$site->searchByTitle("Rotweiller"); //Pesquisa item por título
-#$site->searchByDescription("Dourado"); //Pesquisa item por descriçao
-#$site->searchByTitleOrDescription("Celular"); //Pesquisa por título ou Descrição
-#$site->searchByPartOfWord("o");
+$site->list(); 									#Lista todos os itens do array
+$site->orderByTitle2();							#Ordena com a função bubble sort
+#$site->orderByTitle();							#Ordena com a função do PHP asort pelo título ou primeiro parâmetro
+#$site->list(); 								#Lista todos os itens do array
+#$site->remove($ad1); 							#remove um item do array
+#$site->view($ad1); 							#visualiza um item do array
+#$site->searchByTitle("Rotweiller"); 			#Pesquisa item por título
+#$site->searchByDescription("Dourado"); 		#Pesquisa item por descriçao
+#$site->searchByTitleOrDescription("Celular");	#Pesquisa por título ou Descrição
+#$site->searchByPartOfWord("o");				#Pesquisa por parte da palavra nos anúncios
