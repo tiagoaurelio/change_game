@@ -133,23 +133,22 @@ class Site {
 	}
 
 	function swap($array, $i) {
-		$x = $this->arrayInt[$i];
-		$this->arrayInt[$i] = $this->arrayInt[$i+1];
-		$this->arrayInt[$i+1] = $x;
+		$x = $this->arrayAds[$i];
+		$this->arrayAds[$i] = $this->arrayAds[$i+1];
+		$this->arrayAds[$i+1] = $x;
 	}
 
 	function orderByTitle2() {
-		$max = count($this->arrayInt)-2;
+		$max = count($this->arrayAds)-2;
 		for ($end=$max; $end>=0; $end--) {
 		 	for ($i=0; $i<=$end; $i++) {
-		 		if ($this->arrayInt[$i] > $this->arrayInt[$i+1]) {
-		 			$this->swap($this->arrayInt, $i);
+		 		if ($this->arrayAds[$i] > $this->arrayAds[$i+1]) {
+		 			$this->swap($this->arrayAds, $i);
 		 		}
 		 	}
 		}
-		$tot = count($this->arrayInt);
-		for ($i=0; $i < $tot ; $i++) {
-		 	echo $this->arrayInt[$i];
+		foreach ($this->arrayAds as $indice => $value) {
+			$this->output($value, $indice);
 		}
 	}
 
@@ -160,7 +159,7 @@ class Site {
 				if (is_array($value)) {
 					foreach ($value as $indice2 => $value2) {
 						if ($indice2 == $description) {
-							$arrayOrderned[$indice] = $value2;
+							$this->swap($this->arrayAds, $i);
 						}
 					}
 				}
