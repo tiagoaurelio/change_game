@@ -28,11 +28,17 @@ class Site {
 		echo("<br/>");
 	}
 
+	function output2($ad){
+		echo $ad->title;
+	}
+
 	function list(){
-		for($x = 0; $x < count($this->arrayAds); $x++){
-			if(!empty($this->arrayAds[$x])) {
-			$this->output($x);
-			}
+		echo "lista";
+		echo count($this->arrayAds);
+		foreach ($this->arrayAds as $indice => $value) {
+			if(!empty($value)) {
+				$this->output2($value);
+			}	
 		}
 	}
 
@@ -91,19 +97,18 @@ class Site {
 	}
 
 	function searchByPartOfWord($part) {
+		$result = array();
 		foreach ($this->arrayAds as $key => $value) {
 			$titlePart = strpos($this->arrayAds[$key]->title, $part);
 			$descriptionPart = strpos($this->arrayAds[$key]->description, $part);
 			if($titlePart!==false) {
-				$this->output($key);
+				$result[] = $this->arrayAds[$key];
 			}
 			elseif($descriptionPart!==false) {
-			 	$this->output($key);
+			 	$result[] = $this->arrayAds[$key];
 			}
-		}	
-		if ($titlePart===false && $descriptionPart===false) {
-			//echo("Anúncio não encontrado.");
 		}
+		return $result;
 	}
 }
 
@@ -112,9 +117,11 @@ $site = new Site();
 $site->insertAd($ad1);
 $ad2 = new Ad("Rotweiller", "Perigoso");
 $site->insertAd($ad2);
-$site->searchByPartOfWord("ado");
-//$site->list(); //Lista todos os itens do array
-//$site->remove($ad1); //remove um item do array
+// $response = $site->searchByPartOfWord("mamameolhando");
+// print_r(count($response)>0 ? $response : "Não encontrado");
+$site->list(); //Lista todos os itens do array
+// $site->remove($ad1); //remove um item do array
+// $site->list(); //Lista todos os itens do array
 //site->view($ad2); //visualiza um item do array
 //$site->searchByTitle("Rotweiller"); //Pesquisa item por título
 //$site->searchByDescription("Dourado"); //Pesquisa item por descriçao
