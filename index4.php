@@ -12,7 +12,6 @@ class Ad {
 
 class Site {
 	var $arrayAds = array();
-	#var $arrayInt = array(6,5,4,3,2,1);
 
 	function insertAd($ad){
 		array_push($this->arrayAds, $ad);
@@ -134,7 +133,7 @@ class Site {
 		}
 	}
 
-	function swap($array, $i) {
+	function swap(&$array, $i) {
 		$x = $this->arrayAds[$i];
 		$this->arrayAds[$i] = $this->arrayAds[$i+1];
 		$this->arrayAds[$i+1] = $x;
@@ -143,7 +142,7 @@ class Site {
 	function orderByTitle2() {
 		echo("Lista ordenada pelo título:<br/>");
 		$max = count($this->arrayAds)-2;
-		if (count($this->arrayAds > 0)) {
+		if ((count($this->arrayAds) > 0)) {
 			for ($end=$max; $end>=0; $end--) {
 			 	for ($i=0; $i<=$end; $i++) {
 			 		if ($this->arrayAds[$i] > $this->arrayAds[$i+1]) {
@@ -179,7 +178,7 @@ $ad9 = new Ad("Lateral direito", "Mochila");
 $site->insertAd($ad9);
 $ad10 = new Ad("Goleiro", "Frangueiro");
 $site->insertAd($ad10);
-$site->list(); 									#Lista todos os itens do array
+#$site->list(); 									#Lista todos os itens do array
 $site->orderByTitle2();							#Ordena com a função bubble sort
 #$site->orderByTitle();							#Ordena com a função do PHP asort pelo título ou primeiro parâmetro
 #$site->list(); 								#Lista todos os itens do array
