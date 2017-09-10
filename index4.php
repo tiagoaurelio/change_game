@@ -3,15 +3,21 @@
 class Ad {
 	public $title;
 	var $description;
+	public $price;
 
-	function __construct($title, $description){
+	function __construct($title, $description, $price){
 		$this->title = $title;
 		$this->description = $description;
+		$this->price = $price;
 	}
 }
 
 class Site {
 	var $arrayAds = array();
+
+	function array() {
+		print_r($this->arrayAds);
+	}
 
 	function insertAd($ad){
 		array_push($this->arrayAds, $ad);
@@ -26,6 +32,23 @@ class Site {
 		echo("<br/>");
 		echo("Description: ".$ad->description);
 		echo("<br/>");
+		echo("Price: ".$ad->price);
+		echo("<br/>");
+	}
+
+	function output2($index){
+		foreach ($index as $indice => $value) {
+			$indice += 1;
+			echo("<br/>");
+			echo("Anúncio: $indice");
+			echo("<br/>");
+			echo("Title: ".$value->title);
+			echo("<br/>");
+			echo("Description: ".$value->description);
+			echo("<br/>");
+			echo("Price: ".$value->price);
+			echo("<br/>");
+		}
 	}
 
 	function list(){
@@ -134,52 +157,116 @@ class Site {
 	}
 
 	function swap(&$array, $i) {
-		$x = $this->arrayAds[$i];
-		$this->arrayAds[$i] = $this->arrayAds[$i+1];
-		$this->arrayAds[$i+1] = $x;
+		$x = $array[$i];
+		$array[$i] = $array[$i+1];
+		$array[$i+1] = $x;
 	}
 
-	function orderByTitle2() {
-		echo("Lista ordenada pelo título:<br/>");
-		$max = count($this->arrayAds)-2;
-		if ((count($this->arrayAds) > 0)) {
-			for ($end=$max; $end>=0; $end--) {
-			 	for ($i=0; $i<=$end; $i++) {
-			 		if ($this->arrayAds[$i] > $this->arrayAds[$i+1]) {
-			 			$this->swap($this->arrayAds, $i);
-			 		}
-			 	}
+	function bubbleSort($data) {
+		$indexByTitle = $data;
+		$max = count($indexByTitle)-2;
+		if (count($indexByTitle) > 0) {
+			for ($end=$max; $end>=0;$end--) { 
+				for ($i=0; $i <= $end ; $i++) { 
+					if ($indexByTitle[$i]->title > $indexByTitle[$i+1]->title) {
+						$this->swap($indexByTitle, $i);
+					}
+				}
 			}
 		}
-		foreach ($this->arrayAds as $indice => $value) {
-			$this->output($value, $indice);
+		return $indexByTitle;
+	}
+
+	function index() {
+		$index = $this->arrayAds;
+		return $index;
+	}
+
+	function mergeSort($data) {
+		$indiceM = $data;
+		if(count($indiceM)>1) {
+            $data_middle = count($indiceM)/2;
+            $data_part1 = $this->mergesort(array_slice($indiceM, 0, $data_middle));
+            $data_part2 = $this->mergesort(array_slice($indiceM, $data_middle, count($indiceM)));
+            $counter1 = $counter2 = 0;
+            for ($i=0; $i<count($indiceM); $i++) {
+                if($counter1 == count($data_part1)) {
+                    $indiceM[$i] = $data_part2[$counter2];
+                    ++$counter2;
+                } elseif (($counter2 == count($data_part2)) or ($data_part1[$counter1]->description < $data_part2[$counter2]->description)) { 
+                    $indiceM[$i] = $data_part1[$counter1];
+                    ++$counter1;
+                } else {
+                    $indiceM[$i] = $data_part2[$counter2];
+                    ++$counter2;
+                }
+            }
+        }
+        return $indiceM;
+	}
+
+	function quickSort($array) {
+		$length = count($array);
+	
+		if($length <= 1){
+			return $array;
+		}
+		else{
+			$pivot = $array[0];
+			$left = $right = array();
+			for($i = 1; $i < count($array); $i++){
+				if($array[$i]->price < $pivot->price){
+					$left[] = $array[$i];
+				}
+				else{
+					$right[] = $array[$i];
+				}
+			}
+			return array_merge($this->quickSort($left), array($pivot), $this->quickSort($right));
+		}
+	}
+
+	function create($qtd) {
+		for($i=1;$i<$qtd;$i++) {
+			$ad = new Ad("teste".$i, "descriçao".$i, 30);
+			$this->insertAd($ad);
 		}
 	}
 }
 
 $site = new Site();
-$ad1 = new Ad("Celular", "Dourado");
+$ad1 = new Ad("Celular", "Dourado", 3000.00);
 $site->insertAd($ad1);
-$ad2 = new Ad("Rotweiller", "Perigoso");
+$ad2 = new Ad("Rotweiller", "Perigoso", 600.00);
 $site->insertAd($ad2);
-$ad3 = new Ad("Abaijour", "Prata");
+$ad3 = new Ad("Abaijour", "Prata", 25.00);
 $site->insertAd($ad3);
-$ad4 = new Ad("Carro", "Renault");
+$ad4 = new Ad("Carro", "Renault", 25000.00);
 $site->insertAd($ad4);
-$ad5 = new Ad("Moto", "Laranja");
+$ad5 = new Ad("Moto", "Laranja", 12250.00);
 $site->insertAd($ad5);
-$ad6 = new Ad("Pneus", "Velhos");
+$ad6 = new Ad("Pneus", "Velhos", 20.00);
 $site->insertAd($ad6);
-$ad7 = new Ad("Dentes", "Humanos");
+$ad7 = new Ad("Dentes", "Humanos", 2000.00);
 $site->insertAd($ad7);
-$ad8 = new Ad("Zico", "Jogador");
+$ad8 = new Ad("Zico", "Jogador", 300000.00);
 $site->insertAd($ad8);
-$ad9 = new Ad("Lateral direito", "Mochila");
+$ad9 = new Ad("Lateral direito", "Mochila", 60000.00);
 $site->insertAd($ad9);
-$ad10 = new Ad("Goleiro", "Frangueiro");
+$ad10 = new Ad("Goleiro", "Frangueiro", 80000.00);
 $site->insertAd($ad10);
-#$site->list(); 									#Lista todos os itens do array
-$site->orderByTitle2();							#Ordena com a função bubble sort
+
+
+$site->create(1000);								#Cria anúncios automáticamente
+#$site->array(); 								#Imprime todos os itens do array
+$data = $site->index();
+#$indexQ = $site->quickSort($data);
+#$site->output2($indexQ);
+#$mergedData = $site->mergeSort($data);			#Ordena com a função merge sort
+#$site->output2($mergedData);					#Impressão de um array
+#$site->bubbleByTitle2();						#Ordena com a função bubble sort
+#$teste = $site->bubbleSort($data);				#Ordenação utilizando o bubble sort
+#$site->output2($teste);						#Imprime o resultado do Bubble sort
 #$site->orderByTitle();							#Ordena com a função do PHP asort pelo título ou primeiro parâmetro
 #$site->list(); 								#Lista todos os itens do array
 #$site->remove($ad1); 							#remove um item do array
