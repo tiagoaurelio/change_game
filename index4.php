@@ -226,6 +226,20 @@ class Site {
 		}
 	}
 
+	function insertionSort($array) {
+		$insertionList = $array;
+		for($i=0;$i<count($insertionList);$i++){
+			$val = $insertionList[$i];
+			$j = $i-1;
+			while($j>=0 && $insertionList[$j]->price > $val->price){
+				$insertionList[$j+1] = $insertionList[$j];
+				$j--;
+			}
+			$insertionList[$j+1] = $val;
+		}
+		return $insertionList;
+	}
+
 	function create($qtd) {
 		for($i=1;$i<$qtd;$i++) {
 			$ad = new Ad("teste".$i, "descriçao".$i, 30);
@@ -260,6 +274,8 @@ $site->insertAd($ad10);
 $site->create(1000);								#Cria anúncios automáticamente
 #$site->array(); 								#Imprime todos os itens do array
 $data = $site->index();
+$indexI = $site->insertionSort($data);
+$site->output2($indexI);
 #$indexQ = $site->quickSort($data);
 #$site->output2($indexQ);
 #$mergedData = $site->mergeSort($data);			#Ordena com a função merge sort
