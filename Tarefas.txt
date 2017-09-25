@@ -1,0 +1,28 @@
+Criar uma função de visualização para cada Anúncio
+
+Ex.
+
+Anúncio:1
+Title:Anuncio de bike
+Description:D1
+
+Anúncio:2
+Title:Anúncio de carro
+Description:D2
+
+
+Criar class ad com classe contrutora (ok)
+
+Criar class sitedeAds (ok)
+
+Criar método listar (ok)
+Criar método remover, pela posição do ad no arrayqueue (ok)
+
+
+passo1) insere 2 ads (ok)
+
+passo2) listar na tela como no exemplo (ok)
+
+passo3) remove o segundo anuncio (ok)
+
+passo4) listar na tela (ok)
